@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#B3191E">
+    <link rel="icon" type="image/png" href="img/logo-galo.png">
+    <title>Galo &amp; Cia · Demonstração</title>
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+<!-- DEMONSTRAÇÃO: esta faixa avisa que os dados são inventados. -->
+<div class="faixa-demo" role="note">🧪 <strong>Demonstração</strong> com dados fictícios. Nada é salvo: ao recarregar a página, tudo volta ao começo.</div>
+<!-- Ícones reaproveitados no sistema inteiro (<use href="#...">), desenhados aqui
+     mesmo, sem baixar nada da internet. Ícones de traço: pegam a cor do texto.
+     As logos ficam em img/ (galo da pastelaria e peixe da peixaria). -->
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="i-vender" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
+    <symbol id="i-caixa" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/></symbol>
+    <symbol id="i-despesas" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+    <symbol id="i-repasses" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6l-2-6H9M15 7h3l2 4"/></symbol>
+    <symbol id="i-produtos" viewBox="0 0 24 24"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z"/><path d="M4 7l8 4 8-4M12 11v10"/></symbol>
+    <symbol id="i-cardapio" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 6.5h4M9 11h6M9 14.5h6M11 18.5h2"/></symbol>
+    <symbol id="i-relatorios" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 16v-5M12 16V7M17 16v-8"/></symbol>
+    <symbol id="i-equipe" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14a5 5 0 0 1 5 5"/></symbol>
+    <symbol id="i-negocio" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></symbol>
+    <symbol id="i-senha" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 8-8M16 7l2 2"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="M14 4h5v16h-5"/><path d="M10 8l-4 4 4 4M6 12h10"/></symbol>
+    <symbol id="i-mais" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></symbol>
+</svg>
+
+<!-- Topo: marca, negócio escolhido e (no computador) o menu e a conta. -->
+<header class="barra-topo">
+    <div class="barra-linha">
+        <a class="marca" href="#/venda">
+            <img id="logo-topo" class="selo-mini" src="img/logo-galo.png" alt="" width="40" height="40">
+            <span>Galo <strong>&amp; Cia</strong></span>
+        </a>
+        <a id="negocio-atual" class="selo-negocio so-logado d-none" href="#/negocio" title="Trocar de negócio"></a>
+
+        <nav id="menu" class="menu-topo so-logado d-none" aria-label="Menu principal">
+            <a class="menu-link" href="#/venda" data-rota="#/venda"><svg aria-hidden="true"><use href="#i-vender"/></svg>Vender</a>
+            <a class="menu-link" href="#/caixa" data-rota="#/caixa"><svg aria-hidden="true"><use href="#i-caixa"/></svg>Caixa</a>
+            <a class="menu-link" href="#/despesas" data-rota="#/despesas"><svg aria-hidden="true"><use href="#i-despesas"/></svg>Despesas</a>
+            <!-- O resto das telas fica guardado aqui, para a barra não ficar amontoada. -->
+            <div class="dropdown">
+                <button id="botao-mais-topo" class="menu-link" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false"><svg aria-hidden="true"><use href="#i-mais"/></svg>Mais<span class="seta" aria-hidden="true"></span></button>
+                <div id="menu-mais-topo" class="dropdown-menu dropdown-menu-end menu-suspenso">
+                    <a class="dropdown-item menu-item" href="#/vendas-do-dia" data-rota="#/vendas-do-dia"><svg aria-hidden="true"><use href="#i-vender"/></svg>Vendas de hoje</a>
+                    <a class="dropdown-item menu-item" href="#/repasses" data-rota="#/repasses"><svg aria-hidden="true"><use href="#i-repasses"/></svg>Repasses</a>
+                    <a class="dropdown-item menu-item" href="#/produtos" data-rota="#/produtos"><svg aria-hidden="true"><use href="#i-produtos"/></svg>Produtos</a>
+                    <a class="dropdown-item menu-item" href="#/cardapio-online" data-rota="#/cardapio-online"><svg aria-hidden="true"><use href="#i-cardapio"/></svg>Cardápio online</a>
+                    <a class="dropdown-item menu-item d-none" href="#/relatorios" data-rota="#/relatorios" data-papel="ADMIN"><svg aria-hidden="true"><use href="#i-relatorios"/></svg>Relatórios</a>
+                    <a class="dropdown-item menu-item d-none" href="#/equipe" data-rota="#/equipe" data-papel="ADMIN"><svg aria-hidden="true"><use href="#i-equipe"/></svg>Equipe</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="barra-conta so-logado d-none dropdown">
+            <button id="botao-conta" class="menu-link" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    title="Minha conta"><svg aria-hidden="true"><use href="#i-senha"/></svg>Minha conta<span class="seta" aria-hidden="true"></span></button>
+            <div id="menu-conta" class="dropdown-menu dropdown-menu-end menu-suspenso">
+                <div class="menu-cabecalho">
+                    <strong id="usuario-logado"></strong>
+                    <small id="papel-logado"></small>
+                </div>
+                <a class="dropdown-item menu-item" href="#/senha" data-rota="#/senha"><svg aria-hidden="true"><use href="#i-senha"/></svg>Minha senha</a>
+                <button class="dropdown-item menu-item acao-sair" type="button"><svg aria-hidden="true"><use href="#i-sair"/></svg>Sair</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main id="tela" class="container tela"></main>
+
+<!-- Celular: as 3 telas mais usadas sempre à mão, embaixo, e o resto no "Mais". -->
+<nav id="menu-celular" class="menu-celular so-logado d-none" aria-label="Menu principal">
+    <a class="menu-link" href="#/venda" data-rota="#/venda"><svg aria-hidden="true"><use href="#i-vender"/></svg>Vender</a>
+    <a class="menu-link" href="#/caixa" data-rota="#/caixa"><svg aria-hidden="true"><use href="#i-caixa"/></svg>Caixa</a>
+    <a class="menu-link" href="#/despesas" data-rota="#/despesas"><svg aria-hidden="true"><use href="#i-despesas"/></svg>Despesas</a>
+    <button id="botao-mais" class="menu-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu-mais"
+            aria-controls="menu-mais"><svg aria-hidden="true"><use href="#i-mais"/></svg>Mais</button>
+</nav>
+
+<!-- "Mais" do celular: sobe de baixo para cima com as outras telas. -->
+<div id="menu-mais" class="offcanvas offcanvas-bottom menu-mais" tabindex="-1" aria-labelledby="menu-mais-titulo">
+    <div class="offcanvas-header">
+        <h2 id="menu-mais-titulo" class="offcanvas-title h5">Mais opções</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+    </div>
+    <div class="offcanvas-body">
+        <p id="usuario-logado-mais" class="small text-secondary mb-2"></p>
+        <nav class="menu-mais-lista" aria-label="Mais opções">
+            <a class="menu-link" href="#/vendas-do-dia" data-rota="#/vendas-do-dia"><svg aria-hidden="true"><use href="#i-vender"/></svg>Vendas de hoje</a>
+            <a class="menu-link" href="#/repasses" data-rota="#/repasses"><svg aria-hidden="true"><use href="#i-repasses"/></svg>Repasses</a>
+            <a class="menu-link" href="#/produtos" data-rota="#/produtos"><svg aria-hidden="true"><use href="#i-produtos"/></svg>Produtos</a>
+            <a class="menu-link" href="#/cardapio-online" data-rota="#/cardapio-online"><svg aria-hidden="true"><use href="#i-cardapio"/></svg>Cardápio online</a>
+            <a class="menu-link d-none" href="#/relatorios" data-rota="#/relatorios" data-papel="ADMIN"><svg aria-hidden="true"><use href="#i-relatorios"/></svg>Relatórios</a>
+            <a class="menu-link d-none" href="#/equipe" data-rota="#/equipe" data-papel="ADMIN"><svg aria-hidden="true"><use href="#i-equipe"/></svg>Equipe</a>
+            <a class="menu-link" href="#/negocio" data-rota="#/negocio"><svg aria-hidden="true"><use href="#i-negocio"/></svg>Trocar negócio</a>
+            <a class="menu-link" href="#/senha" data-rota="#/senha"><svg aria-hidden="true"><use href="#i-senha"/></svg>Minha senha</a>
+            <button class="menu-link acao-sair" type="button"><svg aria-hidden="true"><use href="#i-sair"/></svg>Sair</button>
+        </nav>
+    </div>
+</div>
+
+<!-- Avisos embaixo, no centro (no celular, acima do menu de baixo). -->
+<div id="avisos" class="position-fixed start-50 translate-middle-x p-3 avisos"></div>
+
+<script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+/* Só da demonstração: a faixa de aviso, a dica do login e a janelinha do WhatsApp. */
+
+.faixa-demo {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    text-align: center;
+    color: #5c3b00;
+    background: #ffe69c;
+    border-bottom: 1px solid #e6c85a;
+}
+
+.dica-demo {
+    margin: 1.25rem 0 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    color: #5c3b00;
+    background: #fff4cc;
+    border-radius: 0.5rem;
+}
+
+.janela-demo {
+    width: min(92vw, 28rem);
+    padding: 1.25rem;
+    border: 0;
+    border-radius: 0.75rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+}
+.janela-demo::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.mensagem-demo {
+    max-height: 40vh;
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    overflow: auto;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    background: #f3f3f3;
+    border-radius: 0.5rem;
+}

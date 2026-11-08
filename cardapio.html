@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#B3191E">
+    <meta name="description" content="Cardápio da Pastelaria do Galo. Escolha os pastéis e peça pelo WhatsApp.">
+    <title>Cardápio · Demonstração</title>
+    <link rel="icon" type="image/png" href="img/logo-galo.png">
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/demo.css">
+</head>
+<body class="cardapio-pagina">
+<!-- DEMONSTRAÇÃO: esta faixa avisa que os dados são inventados. -->
+<div class="faixa-demo" role="note">🧪 <strong>Demonstração</strong> com dados fictícios. Nada é salvo: ao recarregar a página, tudo volta ao começo.</div>
+<!-- Esta página é PÚBLICA: qualquer pessoa abre, sem login. Por isso ela não carrega o
+     sistema interno (menu, telas, login). Só mostra o cardápio e monta o pedido. -->
+
+<header class="cardapio-topo">
+    <div class="cardapio-topo-linha">
+        <img class="cardapio-logo" src="img/logo-galo.png" alt="Pastelaria do Galo" width="56" height="52">
+        <div class="cardapio-titulo">
+            <h1>Pastelaria do Galo</h1>
+            <p>Cardápio · Lagoa de Praia</p>
+        </div>
+    </div>
+    <!-- "Estamos abertos" / "Fechados": faixa própria, embaixo do nome. -->
+    <div id="situacao" class="cardapio-situacao" role="status">Carregando…</div>
+</header>
+
+<main class="cardapio-principal">
+    <div id="aviso" class="cardapio-aviso d-none" role="status"></div>
+
+    <label class="venda-busca">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span class="visually-hidden">Buscar no cardápio</span>
+        <input id="busca" type="search" autocomplete="off" placeholder="Buscar sabor ou bebida…">
+    </label>
+
+    <div id="lista"><p class="venda-vazio">Carregando o cardápio…</p></div>
+    <noscript><p class="venda-vazio">Para ver o cardápio, ative o JavaScript do navegador.</p></noscript>
+</main>
+
+<!-- A barra do pedido: sempre à vista, com o total. Tocar abre o pedido para finalizar. -->
+<button id="barra-pedido" class="barra-pedido barra-pedido-cardapio vazia" type="button"
+        data-bs-toggle="offcanvas" data-bs-target="#painel-pedido" aria-controls="painel-pedido">
+    <span>Toque num produto para começar</span>
+</button>
+
+<div id="painel-pedido" class="offcanvas offcanvas-bottom painel-cardapio" tabindex="-1" aria-labelledby="titulo-pedido">
+    <div class="offcanvas-header">
+        <h2 id="titulo-pedido" class="offcanvas-title h4">Seu pedido</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Voltar ao cardápio"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul id="lista-pedido" class="pedido-lista"></ul>
+        <div class="text-end mb-2"><button id="limpar" class="btn btn-link btn-sm" type="button">Limpar o pedido</button></div>
+
+        <form id="form-pedido" novalidate>
+            <div class="mb-2">
+                <label class="form-label" for="p-nome">Seu nome</label>
+                <input id="p-nome" class="form-control" maxlength="60" autocomplete="name" required>
+            </div>
+
+            <div class="mb-2">
+                <div class="form-label">Como você quer receber?</div>
+                <div class="btn-group grupo-grande w-100" role="group" aria-label="Retirada ou entrega">
+                    <input type="radio" class="btn-check" name="tipo" id="tipo-retirada" value="RETIRADA" checked>
+                    <label class="btn btn-outline-secondary" for="tipo-retirada">Retirar</label>
+                    <input type="radio" class="btn-check" name="tipo" id="tipo-entrega" value="ENTREGA">
+                    <label class="btn btn-outline-secondary" for="tipo-entrega">Entrega</label>
+                </div>
+                <div id="bloco-entrega" class="mt-2 d-none">
+                    <label class="form-label small" for="p-local">Onde você está?</label>
+                    <select id="p-local" class="form-select mb-2"></select>
+                    <label class="form-label small" for="p-endereco">Ponto de referência</label>
+                    <input id="p-endereco" class="form-control" maxlength="150" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <div class="form-label">Como vai pagar?</div>
+                <div class="btn-group grupo-grande w-100" role="group" aria-label="Forma de pagamento">
+                    <input type="radio" class="btn-check" name="pagamento" id="pag-pix" value="PIX" checked>
+                    <label class="btn btn-outline-secondary" for="pag-pix">Pix</label>
+                    <input type="radio" class="btn-check" name="pagamento" id="pag-dinheiro" value="DINHEIRO">
+                    <label class="btn btn-outline-secondary" for="pag-dinheiro">Dinheiro</label>
+                </div>
+                <p id="ajuda-pix" class="form-text mb-0">A pastelaria te passa a chave Pix pelo WhatsApp.</p>
+                <div id="bloco-troco" class="mt-2 d-none">
+                    <label class="form-label small" for="p-troco">Troco para quanto? (deixe em branco se não precisa)</label>
+                    <div class="input-group">
+                        <span class="input-group-text">R$</span>
+                        <input id="p-troco" class="form-control" inputmode="decimal" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label" for="p-observacao">Observação (opcional)</label>
+                <textarea id="p-observacao" class="form-control" rows="2" maxlength="200"></textarea>
+            </div>
+
+            <!-- O detalhe da conta rola junto com o formulário; no rodapé fixo ficam só o total e o botão. -->
+            <dl class="resumo-fechamento mb-1">
+                <dt>Itens</dt><dd id="r-itens">R$ 0,00</dd>
+                <dt id="r-taxa-rotulo" class="d-none">Entrega</dt><dd id="r-taxa" class="d-none">R$ 0,00</dd>
+            </dl>
+            <p class="small text-secondary mb-2">O total é uma estimativa. A pastelaria confirma o valor e o tempo pelo WhatsApp.</p>
+
+            <div class="pedido-rodape-cardapio">
+            <div class="rodape-total">
+                <span class="fw-bold">Total estimado</span>
+                <strong id="r-total" class="pedido-total-cardapio">R$ 0,00</strong>
+            </div>
+            <div id="erro-pedido" class="alert alert-danger py-2 d-none" role="alert"></div>
+            <button id="enviar" class="btn btn-primary btn-lg w-100" type="submit">Pedir pelo WhatsApp</button>
+            <a id="link-reserva" class="d-none small mt-2 text-center" rel="noopener" href="#">
+                O WhatsApp não abriu? Toque aqui.</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="vendor/bootstrap/bootstrap.bundle.min.js"></script>
+<script type="module" src="js/publico/cardapio.js"></script>
+</body>
+</html>
