@@ -51,6 +51,12 @@ const telas = {
  */
 const somenteAdmin = new Set(['#/equipe', '#/relatorios']);
 
+/**
+ * Telas de um negócio só. O cardápio online é da pastelaria: na peixaria nem aparece no
+ * menu e, se alguém digitar o endereço, volta para a venda.
+ */
+const somenteDoNegocio = { '#/cardapio-online': 'PASTELARIA' };
+
 /** O que as telas podem fazer com a aplicação, sem conhecer os detalhes uma da outra. */
 const contexto = {
     estado,
@@ -111,7 +117,10 @@ function atualizarCabecalho() {
         } else {
             link.removeAttribute('aria-current');
         }
-        link.classList.toggle('d-none', Boolean(link.dataset.papel) && link.dataset.papel !== papel);
+        const outroPapel = Boolean(link.dataset.papel) && link.dataset.papel !== papel;
+        // Telas de um negócio só (ex.: o cardápio online é da pastelaria) somem no outro.
+        const outroNegocio = Boolean(link.dataset.negocio) && link.dataset.negocio !== estado.negocio;
+        link.classList.toggle('d-none', outroPapel || outroNegocio);
     });
     document.getElementById('botao-mais').classList.toggle('active', rotasDoMais.has(rotaAtual));
     // No computador, o "Mais" e o menu da conta ficam destacados quando a tela atual está dentro deles.
@@ -162,6 +171,12 @@ async function mostrarTela() {
     if (somenteAdmin.has(rota) && estado.usuario.papel !== 'ADMIN') {
         avisar('Essa tela é só para administradores.', 'warning');
         contexto.irPara(estado.negocio ? '#/venda' : '#/negocio');
+        return;
+    }
+
+    const negocioDaRota = somenteDoNegocio[rota];
+    if (negocioDaRota && estado.negocio && estado.negocio !== negocioDaRota) {
+        contexto.irPara('#/venda');
         return;
     }
 
