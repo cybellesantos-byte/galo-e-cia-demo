@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 130" role="img" aria-label="Peixaria">
+  <!-- Logo provisória da Peixaria, no mesmo formato do galo: círculo com borda escura.
+       Peixe amarelo (cor da marca) sobre azul-petróleo (cor da Peixaria no sistema). -->
+  <defs>
+    <path id="arco" d="M 22 66 A 48 48 0 0 1 118 66"/>
+  </defs>
+  <circle cx="70" cy="65" r="62" fill="#167C8F" stroke="#2B1A12" stroke-width="5"/>
+  <circle cx="70" cy="65" r="53" fill="none" stroke="#F6C21B" stroke-width="1.5" stroke-dasharray="1 5" stroke-linecap="round"/>
+  <text font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="17" letter-spacing="2" fill="#FFF4D6" stroke="#0B3C49" stroke-width="3" paint-order="stroke" text-anchor="middle">
+    <textPath href="#arco" startOffset="50%">PEIXARIA</textPath>
+  </text>
+  <!-- peixe -->
+  <g transform="translate(70 76)">
+    <path d="M-32 0 C-20 -24 10 -26 26 -4 L40 -18 L40 18 L26 4 C10 26 -20 24 -32 0 Z"
+          fill="#F6C21B" stroke="#2B1A12" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M-6 -17 C-1 -8 -1 8 -6 17" fill="none" stroke="#2B1A12" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="-18" cy="-4" r="4.2" fill="#fff" stroke="#2B1A12" stroke-width="2.5"/>
+    <circle cx="-17" cy="-4" r="1.6" fill="#2B1A12"/>
+  </g>
+  <!-- ondas -->
+  <path d="M30 106 q7 -7 14 0 t14 0 t14 0 t14 0 t14 0" fill="none" stroke="#FFF4D6" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

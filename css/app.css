@@ -1,0 +1,2492 @@
+/* ============================================================================
+   Visual do Galo & Cia (ver docs/IDENTIDADE_VISUAL.md e docs/PLANO_VISUAL.md).
+
+   Estilo escolhido no protótipo: "Cardápio em grade" (estilo B). Topo vermelho
+   com faixa amarela, fundo creme, cartões brancos com "sombra de carimbo"
+   (uma linha embaixo, sem borrão), títulos arredondados e fortes.
+
+   COMO FUNCIONA: o Bootstrap desenha tudo usando variáveis CSS (--bs-...).
+   Aqui trocamos essas variáveis pelas da marca. Assim, cada botão, campo e
+   cartão do sistema muda de cara sem precisarmos mexer tela por tela.
+
+   Para mudar uma cor do sistema inteiro, altere só a variável --galo-... aqui.
+   ========================================================================== */
+
+/* Fontes salvas no projeto (vendor/fonts, licença OFL): o sistema funciona sem
+   internet e não avisa nenhum site de fora a cada tela aberta. Cada arquivo é
+   "variável": um só arquivo tem todos os pesos, do normal ao extra-negrito.
+   font-display: swap mostra o texto na fonte do sistema até a fonte carregar. */
+@font-face {
+    font-family: "Baloo 2";
+    src: url("../vendor/fonts/baloo2-latin.woff2") format("woff2");
+    font-weight: 400 800;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Nunito";
+    src: url("../vendor/fonts/nunito-latin.woff2") format("woff2");
+    font-weight: 200 1000;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    /* Cores da marca */
+    --galo-vermelho: #B3191E;
+    --galo-vermelho-escuro: #8E1418;
+    --galo-vermelho-noite: #6F0F12;
+    --galo-amarelo: #F6C21B;
+    --galo-amarelo-escuro: #DDA90C;
+    --galo-laranja: #E8761E;
+    --galo-escuro: #2B1A12;
+    --galo-texto-suave: #6E5242;   /* textos de apoio: 6,6:1 sobre o creme */
+    --galo-creme: #FFF4D6;
+    --galo-fundo: #FFF8E7;         /* fundo das telas */
+    --galo-borda: #EBDDBC;
+    --galo-borda-forte: #CDB98E;
+    --galo-sombra: 0 2px 0 var(--galo-borda);   /* a "sombra de carimbo" */
+    --galo-vermelho-rgb: 179, 25, 30;            /* o vermelho em números, para os contornos de foco */
+    --galo-foco: rgba(179, 25, 30, 0.18);        /* brilho em volta do campo selecionado */
+    --galo-brilho: rgba(246, 194, 27, 0.25);     /* luz amarela nos cartões de destaque */
+
+    /* Fontes: títulos arredondados (Baloo 2) e texto amigável (Nunito).
+       Sem os arquivos delas, o navegador usa a fonte do sistema. */
+    --fonte-titulo: "Baloo 2", "Nunito", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    --fonte-texto: "Nunito", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    /* Altura do menu de baixo no celular (as telas reservam esse espaço). */
+    --menu-celular-altura: 64px;
+
+    /* Bootstrap passa a usar as da marca */
+    --bs-body-bg: var(--galo-fundo);
+    --bs-body-color: var(--galo-escuro);
+    --bs-secondary-color: var(--galo-texto-suave);
+    --bs-primary: var(--galo-vermelho);
+    --bs-primary-rgb: 179, 25, 30;
+    --bs-link-color-rgb: 179, 25, 30;
+    --bs-link-hover-color-rgb: 142, 20, 24;
+    --bs-border-color: var(--galo-borda);
+    --bs-border-radius: 0.75rem;
+    --bs-border-radius-lg: 1rem;
+    --bs-focus-ring-color: rgba(179, 25, 30, 0.25);
+    --bs-font-sans-serif: var(--fonte-texto);
+}
+
+/* Peixaria: a mesma casa, outra cor. Ao escolher a peixaria, as variáveis da marca
+   trocam de vermelho/amarelo para azul-marinho/azul-água, e o sistema inteiro muda
+   junto, sem mexer tela por tela. Assim fica claro, de longe, em qual negócio se está.
+   Contrastes conferidos: texto escuro no fundo 14,8:1; texto de apoio 6,5:1; branco
+   no azul-marinho 9,1:1; texto escuro no azul-água 9,4:1.
+   As variáveis do Bootstrap que usam as da marca são repetidas aqui, porque o
+   navegador as calcula uma vez no :root e não as recalcularia sozinho. */
+body[data-negocio="PEIXARIA"] {
+    --galo-vermelho: #0F4C75;          /* azul-marinho: topo, botões, títulos */
+    --galo-vermelho-escuro: #0B3A5A;
+    --galo-vermelho-noite: #082A42;
+    --galo-amarelo: #7FD1E3;           /* azul-água: escolhido, selos, faixa do topo */
+    --galo-amarelo-escuro: #4FB3CC;
+    --galo-escuro: #0B2233;
+    --galo-texto-suave: #3F5B70;
+    --galo-creme: #DCEEF7;
+    --galo-fundo: #EEF5FA;
+    --galo-borda: #C9DDEA;
+    --galo-borda-forte: #93B8D0;
+    --galo-sombra: 0 2px 0 var(--galo-borda);
+    --galo-vermelho-rgb: 15, 76, 117;
+    --galo-foco: rgba(15, 76, 117, 0.2);
+    --galo-brilho: rgba(127, 209, 227, 0.25);
+
+    --bs-body-bg: var(--galo-fundo);
+    --bs-body-color: var(--galo-escuro);
+    --bs-secondary-color: var(--galo-texto-suave);
+    --bs-primary: var(--galo-vermelho);
+    --bs-primary-rgb: 15, 76, 117;
+    --bs-link-color-rgb: 15, 76, 117;
+    --bs-link-hover-color-rgb: 11, 58, 90;
+    --bs-border-color: var(--galo-borda);
+    --bs-focus-ring-color: rgba(15, 76, 117, 0.25);
+    background-color: var(--galo-fundo);
+}
+
+/* ── Textos ───────────────────────────────────────────────────────────────── */
+
+h1, h2, h3, .h1, .h2, .h3, .h4, .h5 {
+    font-family: var(--fonte-titulo);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+/* O título de cada tela: grande e no vermelho da marca. */
+.cabecalho-tela h1,
+.cabecalho-tela .h3 {
+    color: var(--galo-vermelho);
+    line-height: 1.1;
+}
+/* "text-muted" do Bootstrap vira o marrom suave da marca (contraste conferido). */
+.text-muted {
+    color: var(--galo-texto-suave) !important;
+}
+
+/* ── Botões ───────────────────────────────────────────────────────────────── */
+
+/* Botões maiores para o toque, no celular. */
+.btn {
+    min-height: 44px;
+    font-weight: 700;
+    border-radius: 0.75rem;
+}
+
+/* Ação principal: vermelho da marca, texto branco e a "sombra de carimbo"
+   mais escura, que dá cara de botão de apertar. */
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--galo-vermelho);
+    --bs-btn-border-color: var(--galo-vermelho);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--galo-vermelho-escuro);
+    --bs-btn-hover-border-color: var(--galo-vermelho-escuro);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--galo-vermelho-noite);
+    --bs-btn-active-border-color: var(--galo-vermelho-noite);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--galo-vermelho);
+    --bs-btn-disabled-border-color: var(--galo-vermelho);
+    --bs-btn-focus-shadow-rgb: var(--galo-vermelho-rgb);
+    box-shadow: 0 3px 0 var(--galo-vermelho-noite);
+}
+.btn-primary:active {
+    box-shadow: none;
+    transform: translateY(2px);
+}
+
+/* Ação secundária (Editar, abas): contorno vermelho da marca. Sem isto, o
+   Bootstrap usa o azul dele, que tem cor própria e não segue o --bs-primary. */
+.btn-outline-primary {
+    --bs-btn-color: var(--galo-vermelho);
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: var(--galo-vermelho);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--galo-vermelho-escuro);
+    --bs-btn-hover-border-color: var(--galo-vermelho-escuro);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--galo-vermelho);
+    --bs-btn-active-border-color: var(--galo-vermelho);
+    --bs-btn-disabled-color: var(--galo-vermelho);
+    --bs-btn-disabled-border-color: var(--galo-vermelho);
+    --bs-btn-focus-shadow-rgb: var(--galo-vermelho-rgb);
+}
+
+/* "Registrar venda" usava o verde do Bootstrap, que destoava: vira vermelho. */
+.btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--galo-vermelho);
+    --bs-btn-border-color: var(--galo-vermelho);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--galo-vermelho-escuro);
+    --bs-btn-hover-border-color: var(--galo-vermelho-escuro);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--galo-vermelho-noite);
+    --bs-btn-active-border-color: var(--galo-vermelho-noite);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--galo-vermelho);
+    --bs-btn-disabled-border-color: var(--galo-vermelho);
+    box-shadow: 0 3px 0 var(--galo-vermelho-noite);
+}
+
+/* Botão em forma de link ("Limpar o pedido"): na cor da marca, e não no azul do Bootstrap. */
+.btn-link {
+    --bs-btn-color: var(--galo-vermelho);
+    --bs-btn-hover-color: var(--galo-vermelho-escuro);
+    --bs-btn-active-color: var(--galo-vermelho-noite);
+}
+
+/* Destaque: amarelo da marca. Texto ESCURO: branco no amarelo fica ilegível. */
+.btn-warning {
+    --bs-btn-color: var(--galo-escuro);
+    --bs-btn-bg: var(--galo-amarelo);
+    --bs-btn-border-color: var(--galo-amarelo);
+    --bs-btn-hover-color: var(--galo-escuro);
+    --bs-btn-hover-bg: var(--galo-amarelo-escuro);
+    --bs-btn-hover-border-color: var(--galo-amarelo-escuro);
+    --bs-btn-active-color: var(--galo-escuro);
+    --bs-btn-active-bg: var(--galo-amarelo-escuro);
+    --bs-btn-active-border-color: var(--galo-amarelo-escuro);
+}
+
+/* Opções (pagamento, origem, período...): brancas; a escolhida fica AMARELA,
+   com texto escuro e em negrito. O vermelho fica só para a ação principal,
+   e a escolha não depende só da cor (o negrito também muda). */
+.btn-outline-secondary {
+    --bs-btn-color: var(--galo-escuro);
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: var(--galo-borda-forte);
+    --bs-btn-hover-color: var(--galo-escuro);
+    --bs-btn-hover-bg: var(--galo-creme);
+    --bs-btn-hover-border-color: var(--galo-borda-forte);
+    --bs-btn-active-color: var(--galo-escuro);
+    --bs-btn-active-bg: var(--galo-amarelo);
+    --bs-btn-active-border-color: var(--galo-amarelo-escuro);
+    --bs-btn-focus-shadow-rgb: var(--galo-vermelho-rgb);
+}
+.btn-check:checked + .btn {
+    font-weight: 800;
+}
+
+/* ── Campos ───────────────────────────────────────────────────────────────── */
+
+/* Campos brancos sobre o creme: destacam onde se digita. */
+.form-control,
+.form-select {
+    background-color: #fff;
+    border-color: var(--galo-borda-forte);
+    border-radius: 0.75rem;
+    min-height: 44px;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--galo-vermelho);
+    box-shadow: 0 0 0 0.25rem var(--galo-foco);
+}
+/* Sem as setinhas minúsculas dos campos de número: digita-se o valor.
+   (O teclado numérico do celular continua aparecendo.) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+.form-check-input:checked {
+    background-color: var(--galo-vermelho);
+    border-color: var(--galo-vermelho);
+}
+.form-label {
+    font-weight: 700;
+}
+
+/* ── Cartões e listas ─────────────────────────────────────────────────────── */
+
+.card {
+    --bs-card-bg: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 1rem;
+    box-shadow: var(--galo-sombra);
+}
+.list-group {
+    --bs-list-group-border-color: var(--galo-borda);
+}
+
+/* ── Topo ─────────────────────────────────────────────────────────────────── */
+
+.barra-topo {
+    color: #fff;
+    background: var(--galo-vermelho);
+    border-bottom: 4px solid var(--galo-amarelo);
+}
+.barra-linha {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+}
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #fff;
+    font-family: var(--fonte-titulo);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.marca:hover {
+    color: #fff;
+}
+.marca strong {
+    color: var(--galo-amarelo);
+}
+.selo-mini {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    object-fit: contain;
+}
+
+/* Negócio escolhido: um selo amarelo, sempre à vista. Tocar nele troca o negócio. */
+.selo-negocio {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 0.75rem;
+    border-radius: 999px;
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.selo-negocio:hover {
+    color: var(--galo-escuro);
+    background: #fff;
+}
+
+/* Itens de menu (topo, menu de baixo e "Mais"): ícone + nome. */
+.menu-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding: 0 0.7rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.menu-link svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Menu do topo (computador): texto branco; a tela atual fica num "comprimido" amarelo. */
+.menu-topo {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.1rem;
+    margin-left: auto;
+}
+.menu-topo .menu-link {
+    padding: 0 0.6rem;
+    font-size: 0.95rem;
+}
+.barra-topo .menu-link {
+    color: #fff;
+}
+.barra-topo .menu-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+.barra-topo .menu-link.active {
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+}
+.barra-conta {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding-left: 0.5rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Setinha "▾" dos botões que abrem um menu (Mais e conta). */
+.seta {
+    width: 0;
+    height: 0;
+    margin-left: 0.15rem;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+}
+/* Menus suspensos do topo: cartão branco, itens grandes, ícone + nome. */
+.menu-suspenso {
+    min-width: 230px;
+    margin-top: 0.5rem !important;
+    padding: 0.4rem;
+    border: 1px solid var(--galo-borda);
+    border-radius: 1rem;
+    box-shadow: 0 10px 28px rgba(43, 26, 18, 0.18);
+}
+/* Quem está logada: nome e perfil, no alto do menu da conta (não é um botão). */
+.menu-cabecalho {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem 0.8rem 0.6rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid var(--galo-borda);
+    color: var(--galo-escuro);
+}
+.menu-cabecalho small {
+    color: var(--galo-texto-suave);
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0 0.8rem;
+    border-radius: 0.7rem;
+    color: var(--galo-escuro);
+    font-weight: 700;
+}
+.menu-item svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.menu-item:hover,
+.menu-item:focus {
+    background: var(--galo-creme);
+    color: var(--galo-escuro);
+}
+.menu-item.active,
+.menu-item.active:hover {
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+}
+.menu-item.acao-sair {
+    color: var(--galo-vermelho);
+}
+
+.tela {
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+}
+
+/* Menu de baixo (só no celular). */
+.menu-celular {
+    display: none;
+}
+
+/* No computador médio, o menu do topo encolhe: só os ícones nos itens da conta
+   (o nome e o "Sair" continuam no title, ao parar o mouse, e no leitor de tela). */
+@media (max-width: 1439.98px) {
+    .barra-conta .menu-link {
+        font-size: 0;
+        gap: 0;
+    }
+    .barra-conta .menu-link svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+/* Notebook pequeno: só o selo do galo no lugar do nome, e itens mais juntos. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .marca span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+    .barra-linha {
+        gap: 0.5rem;
+    }
+    .menu-topo .menu-link {
+        padding: 0 0.35rem;
+        gap: 0.3rem;
+        font-size: 0.88rem;
+    }
+}
+
+/* Celular e tablet em pé: topo enxuto; o menu vai para baixo, como num aplicativo. */
+@media (max-width: 991.98px) {
+    .menu-topo,
+    .barra-conta {
+        display: none !important;
+    }
+    .barra-linha {
+        justify-content: space-between;
+    }
+    .menu-celular {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1030;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        height: calc(var(--menu-celular-altura) + env(safe-area-inset-bottom));
+        padding-bottom: env(safe-area-inset-bottom);
+        background: #fff;
+        border-top: 1px solid var(--galo-borda);
+        box-shadow: 0 -2px 10px rgba(43, 26, 18, 0.08);
+    }
+    .menu-celular.d-none {
+        display: none !important;
+    }
+    .menu-celular .menu-link {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.15rem;
+        border-radius: 0;
+        padding: 0;
+        font-size: 0.78rem;
+        color: var(--galo-texto-suave);
+    }
+    .menu-celular .menu-link svg {
+        width: 24px;
+        height: 24px;
+    }
+    /* A tela atual: ícone dentro de um comprimido amarelo e o nome em vermelho. */
+    .menu-celular .menu-link.active {
+        color: var(--galo-vermelho);
+    }
+    .menu-celular .menu-link.active svg {
+        width: 52px;
+        padding: 2px 14px;
+        border-radius: 999px;
+        background: var(--galo-amarelo);
+        color: var(--galo-escuro);
+    }
+    /* As telas reservam o espaço do menu de baixo, para nada ficar escondido atrás dele. */
+    body:not(.modo-login) .tela {
+        padding-bottom: calc(var(--menu-celular-altura) + env(safe-area-inset-bottom) + 1.5rem);
+    }
+    body:not(.modo-login) .avisos {
+        bottom: calc(var(--menu-celular-altura) + env(safe-area-inset-bottom));
+    }
+    /* O que fica grudado no rodapé da tela (barra de pagamento dos repasses)
+       para logo ACIMA do menu de baixo, e não escondido atrás dele. */
+    body:not(.modo-login) .barra-pagamento {
+        bottom: calc(var(--menu-celular-altura) + env(safe-area-inset-bottom));
+    }
+}
+
+/* "Mais" do celular: painel que sobe de baixo, com uma opção por linha. */
+.menu-mais {
+    --bs-offcanvas-height: auto;
+    border-radius: 1.25rem 1.25rem 0 0;
+    border-top: 4px solid var(--galo-amarelo);
+    background: var(--galo-fundo);
+}
+.menu-mais .offcanvas-body {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+.menu-mais-lista {
+    display: grid;
+    gap: 0.4rem;
+}
+.menu-mais-lista .menu-link {
+    justify-content: flex-start;
+    gap: 0.75rem;
+    min-height: 52px;
+    padding: 0 1rem;
+    border-radius: 0.9rem;
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    box-shadow: var(--galo-sombra);
+    color: var(--galo-escuro);
+}
+.menu-mais-lista .menu-link.d-none {
+    display: none;
+}
+.menu-mais-lista .menu-link.active {
+    border-color: var(--galo-vermelho);
+    color: var(--galo-vermelho);
+}
+.menu-mais-lista .acao-sair {
+    margin-top: 0.5rem;
+    color: var(--galo-vermelho);
+}
+
+.avisos {
+    bottom: 0;
+}
+
+/* ── Tela de login ────────────────────────────────────────────────────────── */
+
+/* No login a barra do topo some: a própria tela já mostra a marca. */
+.modo-login .barra-topo {
+    display: none;
+}
+
+/* Sem o espaço de 1rem que as outras telas têm no topo: ali apareceria uma faixa
+   creme em cima do fundo vermelho. */
+.modo-login .tela {
+    padding: 0;
+}
+
+/* Um cartão só, centralizado, sobre o degradê laranja → azul.
+   Vale igual no celular e no computador; só os tamanhos mudam. */
+.login-palco {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem 1.25rem;
+    color: #fff;
+    /* Laranja da pastelaria de um lado, azul da peixaria do outro. */
+    background: linear-gradient(135deg, #E8761E 0%, #D4572A 30%, #1B5A86 70%, #0B3A5A 100%);
+}
+/* Bolinhas sutis por cima do fundo. */
+.login-palco::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.6px, transparent 1.6px);
+    background-size: 22px 22px;
+    pointer-events: none;
+}
+.login-palco > * {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
+
+/* Marca dentro do cartão: as duas figurinhas e o nome, em cima do formulário. */
+.login-marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+/* As duas figurinhas lado a lado: o sistema é da pastelaria e da peixaria. */
+.login-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+}
+.login-logos img {
+    width: clamp(84px, 22vw, 104px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(43, 26, 18, 0.25));
+}
+.login-titulo {
+    margin: 1rem 0 0;
+    font-weight: 900;
+    font-size: clamp(2rem, 8vw, 2.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #0B3A5A;                 /* azul-marinho da peixaria */
+}
+.login-titulo span {
+    color: #D4572A;                 /* laranja da pastelaria */
+}
+
+.login-cartao {
+    width: 100%;
+    max-width: 460px;
+    color: var(--galo-escuro);
+    border-top: 6px solid var(--galo-amarelo);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+}
+.aviso-caps {
+    display: inline-block;
+    margin-top: 0.4rem;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--galo-escuro);
+    background: var(--galo-amarelo);
+    border-radius: 999px;
+}
+
+
+/* ── Escolha do negócio ───────────────────────────────────────────────────── */
+
+.escolha-negocio {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    min-height: 140px;
+    padding: 1.5rem;
+    text-align: left;
+    color: #fff;
+    border: 0;
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 22px rgba(43, 26, 18, 0.18);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.escolha-negocio:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(43, 26, 18, 0.24);
+}
+.escolha-negocio:focus-visible {
+    outline: 4px solid var(--galo-amarelo);
+    outline-offset: 3px;
+}
+.escolha-pastelaria {
+    background: linear-gradient(135deg, var(--galo-vermelho), #D44A1C);
+}
+.escolha-peixaria {
+    background: linear-gradient(135deg, #0E5566, #1A8599);
+}
+.escolha-icone {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    font-size: 2.4rem;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+}
+.escolha-titulo {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+.escolha-detalhe {
+    display: block;
+    opacity: 0.92;
+}
+
+/* ── Equipe ───────────────────────────────────────────────────────────────── */
+
+.cabecalho-com-acao {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+.cabecalho-com-acao > .btn {
+    flex: none;
+}
+.cabecalho-tela {
+    margin: 0.5rem 0 1.5rem;
+}
+
+/* Uma pessoa por linha: avatar, nome e detalhes, ação à direita. */
+.pessoa {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
+.pessoa + .pessoa {
+    border-top: 1px solid var(--galo-borda);
+}
+.pessoa-info {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.pessoa-acao {
+    flex: 0 0 auto;
+}
+.pessoa-avatar {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    font-weight: 800;
+    border-radius: 50%;
+}
+/* Desativado: apagado na tela, mas o selo "Desativado" diz o estado em texto. */
+.pessoa-inativa .pessoa-avatar,
+.pessoa-inativa .pessoa-info {
+    opacity: 0.55;
+}
+
+/* Cores do papel: no avatar e no selo ao lado do nome. */
+.papel-admin {
+    color: #fff;
+    background-color: var(--galo-vermelho);
+}
+.papel-equipe {
+    color: var(--galo-escuro);
+    background-color: var(--galo-amarelo);
+}
+.selo-inativo {
+    color: #fff;
+    background-color: #6B5A4E;
+}
+.selo-voce {
+    color: var(--galo-escuro);
+    background-color: var(--galo-creme);
+    border: 1px solid var(--galo-borda-forte);
+}
+
+/* Opção de papel: título em cima, explicação embaixo, alinhados à esquerda. */
+.opcao-papel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 0.75rem 1rem;
+}
+.opcao-titulo {
+    font-weight: 800;
+}
+.opcao-detalhe {
+    font-size: 0.875rem;
+    font-weight: 400;
+    opacity: 0.85;
+}
+
+@media (max-width: 575.98px) {
+    .pessoa {
+        flex-wrap: wrap;
+    }
+    /* No celular, o botão de ação vai para a linha de baixo, ocupando a largura. */
+    .pessoa-acao {
+        width: 100%;
+        padding-left: calc(48px + 1rem);
+    }
+}
+
+/* ── Minha senha ──────────────────────────────────────────────────────────── */
+
+/* Contador de caracteres: fica verde e em negrito ao atingir o mínimo
+   (e o texto muda para "tamanho ok": não depende só da cor). */
+.contador-senha.contador-ok {
+    color: #1E7A3C;
+    font-weight: 700;
+}
+
+/* ── Caixa ────────────────────────────────────────────────────────────────── */
+
+/* Selo do estado do caixa: o texto diz o estado ("Caixa aberto"), a bolinha só reforça. */
+.estado-caixa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border-radius: 999px;
+}
+.estado-caixa::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+.estado-aberto {
+    color: var(--galo-escuro);
+    background: var(--galo-amarelo);
+}
+.estado-fechado {
+    color: #fff;
+    background: #6B5A4E;
+}
+
+/* Cartão de destaque: o número que importa, grande, sobre o vermelho da marca. */
+.caixa-destaque {
+    color: #fff;
+    border: 0;
+    background:
+        radial-gradient(circle at 92% 8%, var(--galo-brilho), transparent 40%),
+        linear-gradient(135deg, var(--galo-vermelho), var(--galo-vermelho-noite));
+}
+.caixa-rotulo {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+.caixa-valor {
+    font-size: clamp(2.4rem, 7vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--galo-amarelo);
+    font-variant-numeric: tabular-nums;
+}
+
+/* A conta aberta: sinal | descrição | valor, com os valores alinhados à direita. */
+.composicao-linha {
+    display: grid;
+    grid-template-columns: 1.25rem 1fr auto;
+    gap: 0.5rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px dashed var(--galo-borda);
+}
+.composicao-sinal {
+    font-weight: 800;
+    text-align: center;
+}
+.composicao-valor {
+    font-variant-numeric: tabular-nums;
+}
+.composicao-zerada {
+    opacity: 0.55;
+}
+.composicao-total {
+    margin-top: 0.25rem;
+    border-bottom: 0;
+    border-top: 2px solid var(--galo-escuro);
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+/* Histórico de reforços e sangrias. */
+.lista-movimentos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.movimento {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 0.6rem 0;
+}
+.movimento + .movimento {
+    border-top: 1px solid var(--galo-borda);
+}
+.movimento-hora {
+    color: var(--bs-secondary-color);
+    font-variant-numeric: tabular-nums;
+}
+.movimento-valor {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+/* O sinal (+/−) vem escrito no valor; a cor só reforça. */
+.valor-entra {
+    color: #1E7A3C;
+}
+.valor-sai {
+    color: var(--galo-vermelho);
+}
+
+/* Fechamento: fica visível ao lado no computador, enquanto se rola o resto. */
+@media (min-width: 992px) {
+    .caixa-fechar {
+        position: sticky;
+        top: 1rem;
+    }
+}
+.passos-fechamento {
+    padding-left: 1.1rem;
+    margin: 0.5rem 0 1rem;
+}
+.previa-diferenca {
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    color: var(--bs-secondary-color);
+    background: var(--galo-creme);
+    border-radius: 0.75rem;
+}
+.diferenca-ok {
+    color: #14532D;
+    background: #DCF2E3;
+}
+.diferenca-sobra {
+    color: #5C3D00;
+    background: #FFF0C2;
+}
+.diferenca-falta {
+    color: #7A0F12;
+    background: #FBDADB;
+}
+
+.resumo-fechamento {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem 1rem;
+}
+.resumo-fechamento dt {
+    font-weight: 400;
+    color: var(--bs-secondary-color);
+}
+.resumo-fechamento dd {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* ── Despesas ─────────────────────────────────────────────────────────────── */
+
+/* Números do resumo do mês, em cartõezinhos. */
+.resumo-numero {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 0.9rem;
+}
+.resumo-rotulo {
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color);
+}
+.resumo-valor {
+    font-family: var(--fonte-titulo);
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+.resumo-destaque {
+    color: #fff;
+    background: var(--galo-vermelho);
+    border-color: var(--galo-vermelho);
+}
+.resumo-destaque .resumo-rotulo {
+    color: rgba(255, 255, 255, 0.85);
+}
+.resumo-alerta {
+    background: #FFF0C2;
+    border-color: var(--galo-amarelo);
+}
+
+/* Uma despesa por linha: dia | descrição e detalhes | valor e situação. */
+.despesa {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 1rem 1.25rem;
+}
+.despesa + .despesa {
+    border-top: 1px solid var(--galo-borda);
+}
+.despesa-data {
+    text-align: center;
+    line-height: 1;
+    padding: 0.4rem 0;
+    background: var(--galo-creme);
+    border-radius: 0.6rem;
+}
+.despesa-dia {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+.despesa-mes {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+}
+.despesa-lado {
+    text-align: right;
+}
+.despesa-valor {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+/* Situação sempre em texto ("Paga · Pix", "Pendente"); a cor só reforça. */
+.selo-pago {
+    color: #14532D;
+    background: #DCF2E3;
+}
+.selo-pendente {
+    color: #5C3D00;
+    background: #FFE08A;
+}
+.itens-despesa summary {
+    cursor: pointer;
+    color: var(--galo-vermelho);
+}
+
+/* Formulário: opções de pagamento em botões, 2 por linha. */
+.opcoes-pagamento {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+}
+.aviso-dinheiro {
+    padding: 0.5rem 0.75rem;
+    color: var(--galo-escuro);
+    background: var(--galo-creme);
+    border-left: 4px solid var(--galo-amarelo);
+    border-radius: 0.5rem;
+}
+.item-linha {
+    display: grid;
+    grid-template-columns: 1fr 4.5rem 5.5rem 5.5rem auto;
+    gap: 0.35rem;
+    align-items: center;
+    margin-bottom: 0.4rem;
+}
+@media (min-width: 992px) {
+    .despesa-form-cartao {
+        position: sticky;
+        top: 1rem;
+    }
+}
+@media (max-width: 575.98px) {
+    /* No celular, cada item vira duas linhas: nome em cima, números embaixo. */
+    .item-linha {
+        grid-template-columns: 1fr 1fr 1fr auto;
+    }
+    .item-linha .item-desc {
+        grid-column: 1 / -1;
+    }
+}
+
+/* ── Repasses ─────────────────────────────────────────────────────────────── */
+
+/* Atalhos de período: "comprimidos" numa linha só, como as categorias da venda.
+   No celular a linha rola para o lado, em vez de quebrar torta em duas. */
+.periodo-atalhos {
+    display: flex;
+    gap: 0.4rem;
+    max-width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+}
+.periodo-atalhos .btn {
+    flex: none;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+.periodo-datas {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+@media (max-width: 575.98px) {
+    .periodo-atalhos {
+        width: 100%;
+    }
+    /* As duas datas dividem a largura e nunca passam da borda do cartão. */
+    .periodo-datas {
+        width: 100%;
+    }
+    .periodo-datas > div {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+}
+
+.repasse-cabecalho {
+    padding: 0.85rem 1.25rem;
+    background: var(--galo-creme);
+    border-bottom: 1px solid var(--galo-borda);
+    border-radius: 1rem 1rem 0 0;
+}
+/* Cada entrega é um <label>: tocar em qualquer lugar da linha marca a caixinha. */
+.repasse {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    margin: 0;
+    padding: 0.9rem 1.25rem;
+    cursor: default;
+}
+.repasse-com-marcador {
+    grid-template-columns: 1.5rem 3rem 1fr auto;
+    cursor: pointer;
+}
+.repasse + .repasse {
+    border-top: 1px solid var(--galo-borda);
+}
+.repasse-marcar {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin: 0;
+}
+.repasse-fechado .repasse-info,
+.repasse-fechado .despesa-data {
+    opacity: 0.65;
+}
+.repasse-semana {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color);
+}
+.repasse-info {
+    min-width: 0;
+}
+
+/* Barra de pagamento: aparece ao marcar entregas, presa no rodapé da tela. */
+.barra-pagamento {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    margin-top: 1rem;
+    padding: 0.9rem 1.25rem;
+    color: #fff;
+    background: var(--galo-escuro);
+    border-radius: 1rem;
+    box-shadow: 0 -6px 18px rgba(43, 26, 18, 0.25);
+}
+.barra-pagamento-conteudo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+.barra-pagamento-total strong {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--galo-amarelo);
+    font-variant-numeric: tabular-nums;
+}
+.barra-pagamento .btn-outline-secondary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: rgba(255, 255, 255, 0.45);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: rgba(255, 255, 255, 0.12);
+}
+.barra-pagamento .text-danger {
+    color: #FFB4B6 !important;
+}
+
+/* ── Avisos ───────────────────────────────────────────────────────────────── */
+
+/* Avisos ficam por cima de tudo e não atrapalham o toque na tela. */
+.avisos {
+    z-index: 1080;
+    width: min(92vw, 420px);
+    pointer-events: none;
+}
+.avisos .alert {
+    pointer-events: auto;
+}
+
+/* ── Venda (estilo B: cartões por categoria) ──────────────────────────────── */
+
+/* Faixa do caixa aberto: discreta, para não roubar a atenção dos produtos. */
+.venda-caixa {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding: 0.6rem 1rem;
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 0.9rem;
+    box-shadow: var(--galo-sombra);
+}
+.ponto-aberto {
+    display: inline-block;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-right: 0.25rem;
+    border-radius: 50%;
+    background: #1E7B45;
+}
+
+/* Produtos à esquerda, pedido à direita (computador). No celular, uma coluna. */
+.venda-grade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 1.25rem;
+    align-items: start;
+}
+@media (max-width: 991.98px) {
+    .venda-grade {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* Busca: um campo grande e arredondado. */
+.venda-busca {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 52px;
+    padding: 0 1rem;
+    background: #fff;
+    border: 1px solid var(--galo-borda-forte);
+    border-radius: 999px;
+    box-shadow: var(--galo-sombra);
+}
+.venda-busca:focus-within {
+    border-color: var(--galo-vermelho);
+    box-shadow: 0 0 0 0.25rem var(--galo-foco);
+}
+.venda-busca svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    fill: none;
+    stroke: var(--galo-texto-suave);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+}
+.venda-busca input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    font-size: 1.05rem;
+    color: var(--galo-escuro);
+}
+
+/* Cada categoria: título vermelho e os cartões em grade. */
+.venda-secao {
+    margin-top: 1rem;
+}
+.venda-secao-titulo {
+    margin: 0 0 0.6rem;
+    font-size: 1.5rem;
+    color: var(--galo-vermelho);
+}
+.venda-cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.6rem;
+}
+@media (max-width: 575.98px) {
+    .venda-cartoes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+.venda-vazio {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 0.9rem;
+}
+
+/* O cartão do produto é um botão grande: tocar soma 1. */
+.produto-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.produto-cartao {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.4rem;
+    min-height: 88px;
+    padding: 0.75rem;
+    border: 1px solid var(--galo-borda);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: var(--galo-sombra);
+    color: var(--galo-escuro);
+    text-align: left;
+    transition: transform 0.08s;
+}
+.produto-cartao:hover {
+    border-color: var(--galo-borda-forte);
+}
+.produto-cartao:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+.produto-cartao:focus-visible {
+    outline: 3px solid var(--galo-vermelho);
+    outline-offset: 2px;
+}
+/* Escolhido: borda vermelha grossa e o número no canto (o número vale mais que a cor). */
+.produto-cartao.escolhido {
+    border: 3px solid var(--galo-vermelho);
+    padding: calc(0.75rem - 2px);
+}
+.produto-nome {
+    font-weight: 800;
+    line-height: 1.2;
+    padding-right: 1.4rem;
+}
+.produto-preco {
+    color: var(--galo-texto-suave);
+    font-size: 0.95rem;
+}
+.produto-qtd {
+    position: absolute;
+    top: -9px;
+    right: -7px;
+    min-width: 30px;
+    height: 30px;
+    padding: 0 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--galo-fundo);
+    border-radius: 999px;
+    background: var(--galo-vermelho);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+.produto-menos {
+    min-height: 44px;
+    border: 1px solid var(--galo-borda-forte);
+    border-radius: 0.75rem;
+    background: var(--galo-creme);
+    color: var(--galo-escuro);
+    font-weight: 800;
+}
+.produto-menos:hover {
+    background: #FFE9A8;
+}
+/* Peixe por kg: o campo do peso aparece embaixo do cartão. */
+.produto-kg {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.produto-kg .form-control {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: right;
+}
+.produto-kg span {
+    font-weight: 700;
+}
+.produto-remover {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--galo-borda-forte);
+    border-radius: 0.75rem;
+    background: #fff;
+    color: var(--galo-vermelho);
+    font-weight: 800;
+}
+
+/* Pedido: coluna fixa ao lado no computador. */
+.venda-pedido {
+    min-width: 0;
+}
+@media (min-width: 992px) {
+    /* Preso ao lado enquanto a lista rola. Se for mais alto que a tela, rola por
+       dentro, com o total e o botão sempre visíveis embaixo. */
+    .venda-pedido {
+        position: sticky;
+        top: 1rem;
+        max-height: calc(100vh - 2rem);
+        overflow-y: auto;
+        border-radius: 1rem;
+        scrollbar-width: thin;
+    }
+    .venda-pedido .offcanvas-body {
+        display: block;
+    }
+}
+.pedido-cartao {
+    width: 100%;
+}
+.pedido-lista {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    border-top: 1px dashed var(--galo-borda);
+}
+.pedido-vazio {
+    padding: 0.75rem 0;
+    color: var(--galo-texto-suave);
+}
+.pedido-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed var(--galo-borda);
+}
+.pedido-item-nome strong {
+    color: var(--galo-vermelho);
+}
+.pedido-item-valor {
+    font-weight: 700;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+.pedido-botoes {
+    display: flex;
+    gap: 0.25rem;
+}
+.pedido-botao {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--galo-borda-forte);
+    border-radius: 0.6rem;
+    background: #fff;
+    color: var(--galo-escuro);
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+.pedido-rodape {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border-top: 2px dashed var(--galo-borda);
+    border-radius: 0 0 1rem 1rem !important;
+}
+.pedido-total {
+    font-family: var(--fonte-titulo);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--galo-vermelho);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Modo de pagamento e origem em botões grandes e fáceis de tocar. */
+.grupo-grande .btn {
+    flex: 1 1 0;
+    font-size: 1.05rem;
+}
+
+/* Celular: barra vermelha com o total, acima do menu de baixo. Tocar abre o pedido. */
+.barra-pedido {
+    display: none;
+}
+@media (max-width: 991.98px) {
+    .venda {
+        padding-bottom: 76px;   /* espaço para a barra do pedido não cobrir o último cartão */
+    }
+    .barra-pedido {
+        position: fixed;
+        left: 0.75rem;
+        right: 0.75rem;
+        bottom: calc(var(--menu-celular-altura) + env(safe-area-inset-bottom) + 0.6rem);
+        z-index: 1020;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        min-height: 56px;
+        padding: 0 0.5rem 0 1.1rem;
+        border: 0;
+        border-radius: 999px;
+        background: var(--galo-vermelho);
+        color: #fff;
+        font-weight: 800;
+        box-shadow: 0 4px 0 var(--galo-vermelho-noite);
+    }
+    .barra-pedido.d-none {
+        display: none;
+    }
+    .barra-pedido strong {
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background: var(--galo-amarelo);
+        color: var(--galo-escuro);
+        font-family: var(--fonte-titulo);
+        font-size: 1.15rem;
+    }
+    .barra-pedido.vazia {
+        justify-content: center;
+        background: var(--galo-escuro);
+        box-shadow: none;
+        font-weight: 700;
+    }
+    /* O pedido vira um painel que sobe de baixo. */
+    .venda-pedido.offcanvas-lg {
+        --bs-offcanvas-height: 90vh;
+        border-radius: 1.25rem 1.25rem 0 0;
+        border-top: 4px solid var(--galo-amarelo);
+        background: var(--galo-fundo);
+    }
+    .venda-pedido .offcanvas-body {
+        padding-top: 0;
+    }
+    .venda-pedido .pedido-cartao {
+        border: 0;
+        box-shadow: none;
+    }
+    .venda-pedido #titulo-pedido {
+        display: none;   /* no painel, o título já está no cabeçalho dele */
+    }
+}
+
+/* ── Produtos (estilo B: grupos por categoria) ────────────────────────────── */
+
+.produtos-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.produtos-filtros .venda-busca {
+    flex: 1 1 280px;
+}
+/* Filtro de situação: rola para o lado no celular, sem quebrar em linhas. */
+.filtros-situacao {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    max-width: 100%;
+    padding-bottom: 2px;
+}
+.filtros-situacao .btn {
+    flex: none;
+    white-space: nowrap;
+    border-radius: 999px;
+}
+.filtro-conta {
+    margin-left: 0.2rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.produtos-grupo {
+    margin-top: 1.25rem;
+}
+.produtos-grupo-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.5rem;
+    font-size: 1.4rem;
+    color: var(--galo-vermelho);
+}
+.produtos-grupo-titulo span {
+    padding: 0 0.5rem;
+    border-radius: 999px;
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+    font-family: var(--fonte-texto);
+    font-size: 0.85rem;
+}
+/* Uma linha por produto, dentro de um cartão branco por categoria. */
+.produtos-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 1rem;
+    box-shadow: var(--galo-sombra);
+}
+.produto-linha {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
+}
+.produto-linha + .produto-linha {
+    border-top: 1px solid var(--galo-borda);
+}
+.produto-linha-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+.produto-linha-nome {
+    font-weight: 800;
+}
+.produto-linha-nome .badge {
+    margin-left: 0.25rem;
+    vertical-align: 0.1em;
+}
+.produto-linha-descricao {
+    font-size: 0.95rem;
+    font-style: italic;
+}
+.produto-linha-detalhe {
+    color: var(--galo-texto-suave);
+    font-size: 0.92rem;
+}
+/* "Fora da lista": apagadinho, mas legível (o selo diz em texto). */
+.produto-fora .produto-linha-nome,
+.produto-fora .produto-linha-detalhe {
+    opacity: 0.75;
+}
+.produto-acoes {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--galo-borda-forte);
+    border-radius: 0.75rem;
+    background: #fff;
+    color: var(--galo-escuro);
+}
+.produto-acoes svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    stroke: none;
+}
+.dropdown-menu {
+    border-color: var(--galo-borda);
+    border-radius: 0.9rem;
+    box-shadow: 0 6px 20px rgba(43, 26, 18, 0.12);
+}
+.dropdown-item {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+.dropdown-item:active {
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+}
+.produtos-vazio {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 1rem;
+    text-align: center;
+}
+
+/* Painel do formulário: abre pela direita, na cor da casa. */
+.painel-produto {
+    --bs-offcanvas-width: min(440px, 100vw);
+    background: var(--galo-fundo);
+    border-left: 4px solid var(--galo-amarelo) !important;
+}
+.sugestoes-categoria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+.sugestao-categoria {
+    min-height: 44px;
+    padding: 0 0.75rem;
+    border: 1px solid var(--galo-borda-forte);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--galo-escuro);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.sugestao-categoria.escolhida {
+    background: var(--galo-amarelo);
+    border-color: var(--galo-amarelo-escuro);
+}
+
+/* ── Relatórios ───────────────────────────────────────────────────────────── */
+
+/* Abas de negócio: três botões que dividem a largura. */
+.rel-abas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+}
+.rel-abas .btn {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+/* Enquanto o período novo carrega, o relatório antigo fica apagadinho. */
+.rel-carregando {
+    opacity: 0.45;
+    transition: opacity 0.15s;
+}
+
+/* Seções lado a lado no computador; uma embaixo da outra no celular. */
+.rel-grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+.rel-secao {
+    margin-bottom: 0.75rem;
+}
+.rel-grade > .rel-secao {
+    margin-bottom: 0;
+}
+
+/* Cor das barras: laranja escuro da marca. Uma cor só, porque a barra mostra
+   tamanho, não "qual é qual". Contraste com o branco do cartão acima de 3:1
+   (conferido). O vermelho fica de fora: em relatório ele lembra prejuízo. */
+.rel-barras {
+    --rel-cor: #C25E14;
+    display: grid;
+    gap: 0.6rem;
+}
+/* Nome e valor numa linha, a barra embaixo ocupando a largura toda:
+   assim o nome do produto aparece inteiro. */
+.rel-barra {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 0.2rem 0.6rem;
+}
+.rel-barra-nome {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.rel-barra-trilho {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: block;
+    height: 0.85rem;
+    background: var(--galo-creme);
+    border-radius: 0 4px 4px 0;
+}
+.rel-barra-cheia {
+    display: block;
+    height: 100%;
+    background: var(--rel-cor);
+    border-radius: 0 4px 4px 0;
+}
+.rel-barra-valor {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+}
+.rel-barra-valor small {
+    margin-left: 0.4rem;
+    font-weight: 400;
+    color: var(--bs-secondary-color);
+}
+
+/* Colunas em pé (dias, meses). */
+.rel-colunas {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+    height: 160px;
+    padding-top: 0.25rem;
+    border-bottom: 1px solid var(--galo-borda-forte);
+}
+.rel-coluna {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+}
+.rel-coluna-area {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+}
+.rel-coluna-cheia {
+    display: block;
+    width: 100%;
+    max-width: 2.5rem;
+    margin: 0 auto;
+    background: #C25E14;
+    border-radius: 4px 4px 0 0;
+}
+.rel-coluna:hover .rel-coluna-cheia {
+    background: #9A4A0F;
+}
+.rel-coluna-rotulo {
+    height: 1.2rem;
+    margin-bottom: -1.4rem;
+    font-size: 0.7rem;
+    text-align: center;
+    color: var(--bs-secondary-color);
+    white-space: nowrap;
+}
+.rel-colunas + details {
+    margin-top: 1.6rem !important;
+}
+.rel-escala {
+    text-align: right;
+}
+
+/* Resultado da peixaria: o número grande, e o sentido sempre escrito. */
+.rel-resultado {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+    background: #DCF2E3;
+    color: #14532D;
+    border-radius: 0.75rem;
+}
+.rel-resultado-negativo {
+    background: #FBDADB;
+    color: #7A0F12;
+}
+
+/* ── Cardápio online (a tela da equipe) ───────────────────────────────────── */
+
+/* "ABERTO" / "FECHADO" em letras grandes: a cor ajuda, mas a palavra é que diz. */
+.loja-situacao {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+.loja-situacao.aberta {
+    background: #E3F4E8;
+    color: #14532D;
+}
+.loja-situacao.fechada {
+    background: var(--galo-creme);
+    color: var(--galo-escuro);
+}
+.loja-situacao .ponto {
+    flex: none;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* ── Cardápio público (a página do cliente) ───────────────────────────────── */
+
+/* Esta página não tem o menu do sistema: é só topo, cardápio e a barra do pedido. */
+.cardapio-pagina {
+    background: var(--galo-fundo);
+}
+.cardapio-topo {
+    color: #fff;
+    background: var(--galo-vermelho);
+    border-bottom: 4px solid var(--galo-amarelo);
+}
+.cardapio-topo-linha {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0.55rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+.cardapio-logo {
+    flex: none;
+    width: 48px;
+    height: auto;
+}
+.cardapio-titulo {
+    flex: 1;
+    min-width: 0;
+}
+.cardapio-titulo h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.1rem, 5.6vw, 1.45rem);   /* cabe numa linha até no celular pequeno */
+    line-height: 1.1;
+    white-space: nowrap;
+}
+.cardapio-titulo p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.92;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* "Estamos abertos" / "Fechados": uma faixa só para isso; a cor ajuda, mas o texto diz. */
+.cardapio-situacao {
+    padding: 0.35rem 1rem;
+    background: rgba(0, 0, 0, 0.22);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-align: center;
+}
+.cardapio-situacao.aberta {
+    background: #E3F4E8;
+    color: #14532D;
+}
+.cardapio-situacao.fechada {
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+}
+.cardapio-principal {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 1rem 6.5rem;   /* espaço embaixo: a barra do pedido não cobre o último cartão */
+}
+.cardapio-aviso {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid var(--galo-amarelo);
+    border-radius: 0.9rem;
+    background: var(--galo-creme);
+    font-weight: 600;
+}
+
+/* Nome ou descrição comprida, sem espaços, não pode empurrar a página para os lados. */
+.produto-item,
+.produto-cartao {
+    min-width: 0;
+}
+.produto-nome,
+.produto-descricao,
+.pedido-item-nome {
+    overflow-wrap: anywhere;
+}
+
+/* A descrição do pastel: até 2 linhas, o resto fica de fora. */
+.produto-descricao {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--galo-texto-suave);
+    font-size: 0.88rem;
+    line-height: 1.25;
+}
+/* Esgotado: continua na lista (o cliente vê que existe), mas não dá para tocar. */
+.produto-cartao.esgotado {
+    border-style: dashed;
+    background: #EFE9E1;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+.produto-cartao.esgotado .produto-nome {
+    color: var(--galo-texto-suave);
+    text-decoration: line-through;
+}
+.produto-cartao.esgotado .produto-preco {
+    color: var(--galo-vermelho);
+    font-weight: 800;
+}
+
+/* A barra do pedido, em qualquer largura de tela (aqui não há menu de baixo). */
+.barra-pedido-cardapio {
+    position: fixed;
+    left: 50%;
+    right: auto;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 1020;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: min(520px, calc(100% - 1.5rem));
+    min-height: 56px;
+    padding: 0 0.5rem 0 1.1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--galo-vermelho);
+    color: #fff;
+    font-weight: 800;
+    box-shadow: 0 4px 0 var(--galo-vermelho-noite);
+}
+.barra-pedido-cardapio strong {
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    background: var(--galo-amarelo);
+    color: var(--galo-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1.15rem;
+}
+.barra-pedido-cardapio.vazia {
+    justify-content: center;
+    background: var(--galo-escuro);
+    box-shadow: none;
+    font-weight: 700;
+}
+
+/* O pedido: sobe de baixo no celular e abre pela direita no computador.
+   Os seletores têm 3 classes de propósito: o Bootstrap posiciona o painel de baixo com uma
+   regra de 2 classes, e uma regra mais fraca seria ignorada (o painel ficava colado à esquerda). */
+.painel-cardapio.offcanvas.offcanvas-bottom {
+    --bs-offcanvas-height: 92vh;
+    border-radius: 1.25rem 1.25rem 0 0;
+    border-top: 4px solid var(--galo-amarelo);
+    background: var(--galo-fundo);
+}
+@media (min-width: 768px) {
+    .painel-cardapio.offcanvas.offcanvas-bottom {
+        top: 0;
+        bottom: 0;
+        left: auto;
+        right: 0;
+        width: min(460px, 100%);
+        height: auto;
+        max-height: none;
+        border-radius: 0;
+        border-top: 0;
+        border-left: 4px solid var(--galo-amarelo);
+        transform: translateX(100%);
+    }
+    /* Aberto (ou abrindo): o painel entra na tela. Sem esta regra, a de cima o manteria empurrado para fora. */
+    .painel-cardapio.offcanvas.offcanvas-bottom.show:not(.hiding),
+    .painel-cardapio.offcanvas.offcanvas-bottom.showing {
+        transform: none;
+    }
+}
+.pedido-total-cardapio {
+    font-family: var(--fonte-titulo);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--galo-vermelho);
+}
+/* Total e botão ficam sempre à vista, mesmo com um pedido grande. A margem negativa faz o
+   rodapé encostar nas bordas do painel (que tem 1rem de espaço em volta). */
+.pedido-rodape-cardapio {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;   /* acima do botão escolhido (Bootstrap põe z-index 1 nele), senão ele tapa o total */
+    margin: 0 -1rem -1rem;
+    padding: 0.75rem 1rem 1rem;
+    background: var(--galo-fundo);
+    border-top: 2px dashed var(--galo-borda);
+}
+#link-reserva:not(.d-none) {
+    display: block;
+}
+
+/* ── Cardápio do cliente: um item por linha no celular ─────────────────────── */
+.prod-linha {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--galo-borda);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: var(--galo-sombra);
+}
+.prod-linha.escolhido {
+    border: 2px solid var(--galo-vermelho);
+    padding: calc(0.7rem - 1px) calc(0.8rem - 1px);
+}
+.prod-texto {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+.prod-linha .produto-nome {
+    padding-right: 0;
+    font-size: 1.02rem;
+}
+.prod-linha .produto-preco {
+    color: var(--galo-vermelho);
+    font-weight: 800;
+}
+.prod-linha.esgotado {
+    border-style: dashed;
+    background: #EFE9E1;
+    box-shadow: none;
+}
+.prod-linha.esgotado .produto-nome {
+    color: var(--galo-texto-suave);
+    text-decoration: line-through;
+}
+.prod-mais,
+.prod-passo button {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--galo-vermelho);
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.prod-passo {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.prod-passo button:first-child {
+    background: var(--galo-creme);
+    color: var(--galo-escuro);
+    border: 1px solid var(--galo-borda-forte);
+}
+.prod-qtd {
+    min-width: 1.6rem;
+    text-align: center;
+    font-family: var(--fonte-titulo);
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+.prod-mais:focus-visible,
+.prod-passo button:focus-visible {
+    outline: 3px solid var(--galo-escuro);
+    outline-offset: 2px;
+}
+/* Linhas de produto da venda e do cardápio do cliente (mesmo visual nas duas telas).
+   Colunas largas (o botão "− 2 +" precisa de espaço) e, no peixe por kg, o campo do peso embaixo. */
+.venda .venda-cartoes,
+.cardapio-pagina .venda-cartoes {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+.venda .prod-linha,
+.cardapio-pagina .prod-linha {
+    flex-wrap: wrap;
+}
+.venda .prod-linha .produto-kg {
+    flex-basis: 100%;
+}
+/* Nome inteiro, sem quebrar no meio da palavra. */
+.venda .prod-linha .produto-nome,
+.cardapio-pagina .prod-linha .produto-nome {
+    overflow-wrap: break-word;
+}
+/* Computador e tablet: nome (e descrição) em cima, na largura toda; preço e botões embaixo.
+   Assim, tocar no "+" (que vira "− 2 +") não espreme o nome e o cartão NÃO muda de altura. */
+@media (min-width: 576px) {
+    .venda .prod-linha,
+    .cardapio-pagina .prod-linha {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "nome nome"
+            "descricao descricao"
+            "preco controle"
+            "peso peso";
+        align-items: center;
+        column-gap: 0.75rem;
+        row-gap: 0;
+    }
+    .venda .prod-linha .prod-texto,
+    .cardapio-pagina .prod-linha .prod-texto {
+        display: contents;
+    }
+    .venda .prod-linha .produto-nome,
+    .cardapio-pagina .prod-linha .produto-nome {
+        grid-area: nome;
+        align-self: start;
+    }
+    .cardapio-pagina .prod-linha .produto-descricao {
+        grid-area: descricao;
+        margin-top: 0.15rem;
+    }
+    .venda .prod-linha .produto-preco,
+    .cardapio-pagina .prod-linha .produto-preco {
+        grid-area: preco;
+        margin-top: 0.5rem;
+    }
+    .venda .prod-linha .prod-mais,
+    .venda .prod-linha .prod-passo,
+    .cardapio-pagina .prod-linha .prod-mais,
+    .cardapio-pagina .prod-linha .prod-passo {
+        grid-area: controle;
+        justify-self: end;
+        margin-top: 0.5rem;
+    }
+    .venda .prod-linha .produto-kg {
+        grid-area: peso;
+        margin-top: 0.5rem;
+    }
+}
+@media (max-width: 575.98px) {
+    .venda .venda-cartoes {
+        grid-template-columns: 1fr;
+    }
+    .cardapio-pagina .venda-cartoes {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+}
+
+/* O formulário do pedido, mais compacto: caixas do tamanho certo, sem esticar. */
+.painel-cardapio .form-label {
+    margin-bottom: 0.2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+.painel-cardapio .form-control,
+.painel-cardapio .form-select {
+    min-height: 42px;
+    padding: 0.4rem 0.75rem;
+    font-size: 1rem;
+}
+.painel-cardapio textarea.form-control {
+    min-height: 0;
+    resize: none;
+}
+.painel-cardapio .grupo-grande .btn {
+    min-height: 42px;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+.rodape-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+.pedido-rodape-cardapio {
+    padding-top: 0.5rem;
+}
+.pedido-rodape-cardapio .btn-lg {
+    min-height: 48px;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+}
+
+/* Entre uma categoria e outra (Simples → Com queijo…), um respiro grande e uma faixa no título,
+   para o cliente perceber que mudou de grupo. */
+.cardapio-pagina .venda-secao {
+    margin-top: 2.25rem;
+}
+.cardapio-pagina .venda-secao:first-child {
+    margin-top: 1rem;
+}
+.cardapio-pagina .venda-secao-titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 3px solid var(--galo-amarelo);
+}
+
+/* ── Escolha em pílulas (filtros, abas, períodos) ─────────────────────────
+   Uma faixa creme com pílulas sem moldura; a escolhida fica amarela e em
+   negrito. Substitui os quadradinhos brancos de contorno. */
+.vd-filtros,
+.rel-abas,
+.periodo-atalhos {
+    padding: 0.25rem;
+    background: var(--galo-creme);
+    border: 1px solid var(--galo-borda);
+    border-radius: 999px;
+}
+.vd-filtros .btn,
+.rel-abas .btn,
+.periodo-atalhos .btn {
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-bg: rgba(255, 255, 255, 0.7);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-bg: var(--galo-amarelo);
+    --bs-btn-active-border-color: var(--galo-amarelo);
+    border-radius: 999px;
+    border-width: 0;
+}
+.vd-filtros .btn-check:checked + .btn,
+.rel-abas .btn-check:checked + .btn,
+.periodo-atalhos .btn-check:checked + .btn {
+    background: var(--galo-amarelo);
+    box-shadow: 0 1px 3px rgba(43, 26, 18, 0.25);
+}
+.vd-filtros {
+    display: flex;
+    width: 100%;
+}
+.vd-filtros .btn {
+    flex: 1 1 0;
+}
+
+/* ── Vendas de hoje: uma linha curta por venda; o detalhe abre ao tocar ──── */
+.vd-resumo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+}
+.vd-resumo > div {
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 0.9rem;
+    box-shadow: var(--galo-sombra);
+}
+.vd-resumo > div:first-child {
+    color: #fff;
+    background: var(--galo-vermelho);
+    border-color: var(--galo-vermelho);
+    box-shadow: none;
+}
+.vd-resumo > div:first-child .text-secondary {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.vd-resumo .text-end {
+    text-align: left !important;
+}
+.vd-lista {
+    display: grid;
+    gap: 0.5rem;
+}
+.vd-venda {
+    background: #fff;
+    border: 1px solid var(--galo-borda);
+    border-radius: 0.9rem;
+    box-shadow: var(--galo-sombra);
+    overflow: hidden;
+}
+.vd-venda[open] {
+    border-color: var(--galo-borda-forte);
+}
+.vd-venda > summary {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    list-style: none;
+}
+.vd-venda > summary::-webkit-details-marker { display: none; }
+.vd-hora {
+    padding: 0.2rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: var(--galo-creme);
+    border-radius: 0.5rem;
+}
+.vd-forma { font-size: 0.9rem; color: var(--bs-secondary-color); }
+.vd-valor { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.vd-detalhe {
+    padding: 0.2rem 1rem 1rem;
+    display: grid;
+    gap: 0.7rem;
+}
+.vd-itens {
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+    background: var(--galo-fundo);
+    border-radius: 0.6rem;
+}
+.vd-itens li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.15rem 0;
+}
+.vd-cancelada > summary { opacity: 0.55; }
+.vd-cancelada .vd-valor { text-decoration: line-through; }
+
+/* Pílulas do filtro de Vendas de hoje: nome + quantidade. */
+.vd-pilula {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 40px;
+    color: var(--galo-escuro);
+    white-space: nowrap;
+}
+.vd-pilula:hover {
+    color: var(--galo-escuro);
+}
+.vd-contagem {
+    min-width: 1.4rem;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.3;
+    text-align: center;
+    color: var(--galo-texto-suave);
+    background: rgba(43, 26, 18, 0.08);
+    border-radius: 999px;
+}
+.vd-filtros .btn-check:checked + .vd-pilula .vd-contagem {
+    color: var(--galo-escuro);
+    background: rgba(255, 255, 255, 0.65);
+}
+/* Tem Pix/cartão esperando confirmação: a quantidade chama a atenção. */
+.vd-contagem-alerta,
+.vd-filtros .btn-check:checked + .vd-pilula .vd-contagem-alerta {
+    color: #fff;
+    background: var(--galo-vermelho);
+}
